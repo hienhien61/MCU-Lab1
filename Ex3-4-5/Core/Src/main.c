@@ -134,13 +134,67 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
- int counter = 0;
+ int count = 0;
+ int state = 0;
+ int counter = 3;
   while (1)
   {
-	  if(counter >= 10) counter = 0;
-	  display7SEG(counter++);
+	  display7SEG (counter) ;
+	  //Den xanh ngang 3s (state = 0)
+	  if(state == 0){
+		  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
+		  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET);
+
+		  HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, GPIO_PIN_SET);
+		  if(count >= 3) {
+			  state = 1;
+			  counter = 2;
+		  }
+	  }
+	  //Den vang ngang 2s (state = 1)
+	  if(state == 1){
+		  display7SEG (counter) ;
+		  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
+		  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET);
+		  if(count >= 5) {
+			  state = 2;
+			  counter = 5;
+		  }
+	  }
+	  //Den xanh doc 3s (state = 2)
+	  if(state == 2){
+		  display7SEG (counter) ;
+		  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
+
+		  HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_SET);
+		  HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, GPIO_PIN_RESET);
+		  if(count >= 8) {
+			  state = 3;
+		  }
+	  }
+	  //Den vang doc 2s (state = 3)
+	  if(state == 3){
+		  display7SEG (counter) ;
+		  HAL_GPIO_WritePin(LED4_GPIO_Port, LED4_Pin, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, GPIO_PIN_SET);
+		  HAL_GPIO_WritePin(LED6_GPIO_Port, LED6_Pin, GPIO_PIN_RESET);
+		  if(count >= 9) {
+			  state = 0;
+			  count = -1;
+			  counter = 4;
+		  }
+	  }
+	  count++;
+	  counter--;
 	  HAL_Delay(1000);
-	  /* USER CODE END WHILE */
+    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
