@@ -54,6 +54,11 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+//Ex7
+void clearAllClock(){
+	HAL_GPIO_WritePin(GPIOA, 0x0000, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA, 0XFFFF, GPIO_PIN_RESET);
+}
 /* USER CODE END 0 */
 
 /**
@@ -99,8 +104,12 @@ int main(void)
   int count = 0;
   while (1)
   {
-	  //Ex6. Test single LED
-	  if(count >= 12) count = 0;
+
+	//Ex7. Test clearAllClock function
+	  if(count >= 12) {
+		  clearAllClock();
+		  count = 0;
+	  }
 	  if(count == 0){
 		  HAL_GPIO_TogglePin(LED_0_GPIO_Port, LED_0_Pin);
 	  }
@@ -139,7 +148,6 @@ int main(void)
 	  }
 	  count++;
 	  HAL_Delay(1000);
-
 
     /* USER CODE END WHILE */
 
