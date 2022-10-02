@@ -175,28 +175,41 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  //int count = 0;
-  //int state = 0;
   //Clock
-  /*int second = 0;
+  int second = 0;
   int minute = 0;
-  int hour = 0;*/
+  int hour = 0;
   int count = 0;
-  int state = 0;
   while (1)
   {
+	  //Ex10: Display a clock, i choose second = 12 and minute = 12 instead of 60 to see the simulation faster
+	  	  if(count >= 12) {
+	  		  clearNumberOnClock(count - 1);
+	  		  count = 0;
+	  	  }
+	  	  if(second >= 60){
+	  		  second = 0;
+	  		  clearNumberOnClock(minute);
+	  		  minute++;
+	  		  if(minute >= 12){
+	  			  clearNumberOnClock(minute - 1);
+	  			  minute = 0;
+	  			  clearNumberOnClock(hour);
+	  			  hour++;
+	  			  if(hour >= 12){
+	  				  clearNumberOnClock(hour - 1);
+	  				  hour = 0;
+	  			  }
+	  		  }
+	  	  }
+	  	  if((count-1) != minute && (count-1) != hour ) clearNumberOnClock(count - 1);
+	  	  setNumberOnClock(count);
+	  	  setNumberOnClock(minute);
+	  	  setNumberOnClock(hour);
 
-	  //Ex 8 + 9: Test setNumberOnClock and clearNumberOnClock
-	  if(count >= 12) {
-		  count = 0;
-		  state = 1 - state;
-	  }
-	  if(state == 0) setNumberOnClock(count++);
-	  else clearNumberOnClock(count++);
-	  HAL_Delay(100);
-
-
-
+	  	  count++;
+	  	  second++;
+	  	  HAL_Delay(50);
 
     /* USER CODE END WHILE */
 
